@@ -1,21 +1,24 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import React, { Component } from "react";
 
-export class TitleBar extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Simple Chat App</Text>
-      </View>
-    );
-  }
-}
+const TitleBar = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Simple Chat App</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#3f50b5",
-    shadowOffset: { width: 0, height: 1 },
-    shadowColor: "#70707070",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     marginBottom: 10,
   },
   text: {
