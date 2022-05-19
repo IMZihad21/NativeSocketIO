@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import Root from "@socketapp/Root";
+import { StyleSheet, View } from "react-native";
+import Root from "@socketapp/ChatUI";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Root />
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -14,7 +15,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
