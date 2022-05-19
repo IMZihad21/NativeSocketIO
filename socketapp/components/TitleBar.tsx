@@ -20,14 +20,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     marginBottom: 10,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
   },
   text: {
     color: "white",
     fontSize: 20,
     fontWeight: "500",
     textAlign: "center",
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 18,
+    marginBottom: 18,
   },
 });
 
