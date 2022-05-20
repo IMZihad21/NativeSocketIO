@@ -21,9 +21,14 @@ const ChatUI: React.FC = () => {
 
   React.useEffect(() => {
     setIsLoading(true);
-    socket = io("http://13.51.225.77", {
-      path: "/socketio/api/socket",
-    });
+    roomName
+      ? (socket = io("http://13.51.225.77", {
+          path: "/socketio/api/socket",
+          query: { roomName },
+        }))
+      : (socket = io("http://13.51.225.77", {
+          path: "/socketio/api/socket",
+        }));
 
     socket.on("updateMessage", (msg: MessageType) => {
       setMessages((messages: MessageType[]) => [...messages, msg]);
@@ -37,10 +42,11 @@ const ChatUI: React.FC = () => {
       setMessages((messages: MessageType[]) => [...messages, msg]);
     });
 
+    setMessages([]);
     setIsLoading(false);
     // Clean up the socket connection when the component unmountss
     return () => socket.disconnect();
-  }, []);
+  }, [roomName]);
 
   const sendMsg = (message: string) => {
     const payload: MessageType = {
