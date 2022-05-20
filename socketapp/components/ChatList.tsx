@@ -8,6 +8,14 @@ import {
 import React from "react";
 
 const ChatList = ({ messages, isLoading, userID }: any) => {
+  const flatListRef = React.useRef<FlatList>(null);
+
+  React.useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToEnd();
+    }
+  }, [messages]);
+
   return (
     <View style={styles.container}>
       {isLoading ? (
@@ -16,6 +24,7 @@ const ChatList = ({ messages, isLoading, userID }: any) => {
         </View>
       ) : (
         <FlatList
+          ref={flatListRef}
           data={messages}
           style={{ flexGrow: 0 }}
           renderItem={({ item, index }) =>
