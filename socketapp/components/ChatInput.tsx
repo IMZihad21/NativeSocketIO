@@ -7,17 +7,24 @@ import {
 } from "react-native";
 import React from "react";
 
-const ChatInput = () => {
+const ChatInput = ({ sendMsg }: any) => {
   const [text, setText] = React.useState<string>("");
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    if (text.trim() === "") return;
+    sendMsg(text);
+    setText("");
+  };
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.msgInput}
         onChangeText={(e) => setText(e)}
+        onKeyPress={(e) => e.nativeEvent.key === "Enter" && onSubmit(e)}
         value={text}
         placeholder="Message"
       />
-      <TouchableHighlight style={styles.sendBtn} onPress={() => alert(text)}>
+      <TouchableHighlight style={styles.sendBtn} onPress={onSubmit}>
         <Text style={styles.sendBtnText}>Send</Text>
       </TouchableHighlight>
     </View>

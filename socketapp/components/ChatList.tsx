@@ -12,19 +12,7 @@ const tempMessages = {
   sender: "socket?.id",
 };
 
-const ChatList = () => {
-  const [messages, setMessages] = React.useState<any>([]);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      new Array(10).fill(tempMessages).forEach((msg) => {
-        setMessages((messages: any) => [...messages, msg]);
-      });
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
+const ChatList = ({ messages, isLoading }: any) => {
   return (
     <View style={styles.container}>
       {isLoading ? (

@@ -8,8 +8,12 @@ let socket: any;
 
 const ChatUI: React.FC = () => {
   const [messages, setMessages] = React.useState<any[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   React.useEffect(() => {
-    socket = io("http://13.51.225.77/socketio");
+    setIsLoading(true);
+    socket = io("http://13.51.225.77", {
+      path: "/socketio/api/socket",
+    });
 
     socket.on("updateMessage", (msg: { msg: String; userId: Number }) => {
       setMessages((messages: any) => [...messages, msg]);
@@ -23,14 +27,27 @@ const ChatUI: React.FC = () => {
       setMessages((messages: any) => [...messages, msg]);
     });
 
+    setIsLoading(false);
     // Clean up the socket connection when the component unmountss
     return () => socket.disconnect();
   }, []);
+
+  const sendMsg = (message: any) => {
+    const payload = {
+      msg: message,
+      sender: socket?.id,
+      userId: socket?.id,
+    };
+    socket.emit("message", payload, (msg: { msg: String; userId: Number }) => {
+      setMessages((messages: any) => [...messages, msg]);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TitleBar />
-      <ChatList />
-      <ChatInput />
+      <ChatList messages={messages} isLoading={isLoading} />
+      <ChatInput sendMsg={sendMsg} />
     </View>
   );
 };
