@@ -19,9 +19,11 @@ const ChatInput = ({ sendMsg }: any) => {
     <View style={styles.container}>
       <TextInput
         style={styles.msgInput}
+        blurOnSubmit={false}
         onChangeText={(e) => setText(e)}
-        onKeyPress={(e) => e.nativeEvent.key === "Enter" && onSubmit(e)}
+        onSubmitEditing={onSubmit}
         value={text}
+        keyboardType="default"
         placeholder="Message"
       />
       <TouchableHighlight style={styles.sendBtn} onPress={onSubmit}>
