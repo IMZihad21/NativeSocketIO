@@ -7,12 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 
-const tempMessages = {
-  msg: "input",
-  sender: "socket?.id",
-};
-
-const ChatList = ({ messages, isLoading }: any) => {
+const ChatList = ({ messages, isLoading, userID }: any) => {
   return (
     <View style={styles.container}>
       {isLoading ? (
@@ -23,23 +18,41 @@ const ChatList = ({ messages, isLoading }: any) => {
         <FlatList
           data={messages}
           style={{ flexGrow: 0 }}
-          keyExtractor={(item) => item.msg}
-          renderItem={({ item, index }) => {
-            return (
+          renderItem={({ item, index }) =>
+            item.sender !== "server" ? (
               <View
+                key={index}
                 style={[
                   styles.messageContainer,
                   {
-                    backgroundColor: index % 2 === 0 ? "#f0f0f0" : "#fff",
-                    alignItems: index % 2 === 0 ? "flex-start" : "flex-end",
+                    backgroundColor:
+                      item.sender !== userID ? "#f0f0f0" : "#fff",
+                    alignItems:
+                      item.sender !== userID ? "flex-start" : "flex-end",
                   },
                 ]}
               >
                 <Text style={styles.messageText}>{item.msg}</Text>
-                <Text style={styles.senderText}>{item.sender}</Text>
+                <Text style={styles.senderText}>
+                  {item.sender !== userID ? item?.sender : "You"}
+                </Text>
               </View>
-            );
-          }}
+            ) : (
+              <View
+                key={index}
+                style={[
+                  styles.messageContainer,
+                  {
+                    backgroundColor: "#70707040",
+                    alignItems: "center",
+                    marginBottom: 10,
+                  },
+                ]}
+              >
+                <Text style={styles.serverText}>{item.msg}</Text>
+              </View>
+            )
+          }
         />
       )}
     </View>
@@ -81,6 +94,10 @@ const styles = StyleSheet.create({
   senderText: {
     fontSize: 12,
     marginTop: 2,
+  },
+  serverText: {
+    fontSize: 12,
+    fontWeight: "500",
   },
 });
 

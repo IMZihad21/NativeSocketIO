@@ -6,8 +6,14 @@ import ChatInput from "./components/ChatInput";
 import { io } from "socket.io-client";
 let socket: any;
 
+export interface MessageType {
+  msg: string;
+  sender?: string;
+  userId?: string;
+}
+
 const ChatUI: React.FC = () => {
-  const [messages, setMessages] = React.useState<any[]>([]);
+  const [messages, setMessages] = React.useState<MessageType[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   React.useEffect(() => {
     setIsLoading(true);
@@ -15,16 +21,16 @@ const ChatUI: React.FC = () => {
       path: "/socketio/api/socket",
     });
 
-    socket.on("updateMessage", (msg: { msg: String; userId: Number }) => {
-      setMessages((messages: any) => [...messages, msg]);
+    socket.on("updateMessage", (msg: MessageType) => {
+      setMessages((messages: MessageType[]) => [...messages, msg]);
     });
 
-    socket.on("newMember", (msg: { msg: String }) => {
-      setMessages((messages: any) => [...messages, msg]);
+    socket.on("newMember", (msg: MessageType) => {
+      setMessages((messages: MessageType[]) => [...messages, msg]);
     });
 
-    socket.on("exitMember", (msg: { msg: String }) => {
-      setMessages((messages: any) => [...messages, msg]);
+    socket.on("exitMember", (msg: MessageType) => {
+      setMessages((messages: MessageType[]) => [...messages, msg]);
     });
 
     setIsLoading(false);
@@ -32,22 +38,31 @@ const ChatUI: React.FC = () => {
     return () => socket.disconnect();
   }, []);
 
-  const sendMsg = (message: any) => {
-    const payload = {
+  const sendMsg = (message: string) => {
+    const payload: MessageType = {
       msg: message,
       sender: socket?.id,
-      userId: socket?.id,
     };
-    socket.emit("message", payload, (msg: { msg: String; userId: Number }) => {
-      setMessages((messages: any) => [...messages, msg]);
+    socket.emit("message", payload, (msg: MessageType) => {
+      setMessages((messages: MessageType[]) => [...messages, msg]);
     });
   };
 
   return (
     <View style={styles.container}>
-      <TitleBar />
-      <ChatList messages={messages} isLoading={isLoading} />
-      <ChatInput sendMsg={sendMsg} />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#707070" />
+      ) : (
+        <>
+          <TitleBar />
+          <ChatList
+            messages={messages}
+            isLoading={isLoading}
+            userID={socket?.id}
+          />
+          <ChatInput sendMsg={sendMsg} />
+        </>
+      )}
     </View>
   );
 };

@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
   },
   msgInput: {
     height: 60,
+    fontSize: 18,
+    fontWeight: "600",
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 10,
