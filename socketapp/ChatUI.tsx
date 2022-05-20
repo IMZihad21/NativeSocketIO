@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import TitleBar from "@socketapp/components/TitleBar";
 import ChatList from "@socketapp/components/ChatList";
 import ChatInput from "./components/ChatInput";
 import { io } from "socket.io-client";
+import JoinRoomModal from "./components/JoinRoomModal";
 let socket: any;
 
 export interface MessageType {
@@ -13,8 +14,11 @@ export interface MessageType {
 }
 
 const ChatUI: React.FC = () => {
+  const [roomName, setRoomName] = React.useState<string>("");
   const [messages, setMessages] = React.useState<MessageType[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     setIsLoading(true);
     socket = io("http://13.51.225.77", {
@@ -54,13 +58,22 @@ const ChatUI: React.FC = () => {
         <ActivityIndicator size="large" color="#707070" />
       ) : (
         <>
-          <TitleBar />
+          <TitleBar
+            setModalVisible={setModalVisible}
+            roomName={roomName}
+            setRoomName={setRoomName}
+          />
           <ChatList
             messages={messages}
             isLoading={isLoading}
             userID={socket?.id}
           />
           <ChatInput sendMsg={sendMsg} />
+          <JoinRoomModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            setRoomName={setRoomName}
+          />
         </>
       )}
     </View>

@@ -1,10 +1,4 @@
-import {
-  TouchableHighlight,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-} from "react-native";
+import { Pressable, StyleSheet, TextInput, View, Text } from "react-native";
 import React from "react";
 
 const ChatInput = ({ sendMsg }: any) => {
@@ -26,9 +20,9 @@ const ChatInput = ({ sendMsg }: any) => {
         keyboardType="default"
         placeholder="Message"
       />
-      <TouchableHighlight style={styles.sendBtn} onPress={onSubmit}>
+      <Pressable style={styles.sendBtn} onPress={onSubmit}>
         <Text style={styles.sendBtnText}>Send</Text>
-      </TouchableHighlight>
+      </Pressable>
     </View>
   );
 };

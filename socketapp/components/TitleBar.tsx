@@ -1,10 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 
-const TitleBar = () => {
+const TitleBar = ({ roomName, setRoomName, setModalVisible }: any) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Simple Chat App</Text>
+      <Text style={styles.text}>Socket Chat!</Text>
+      <Pressable
+        style={styles.sendBtn}
+        onPress={() => {
+          roomName ? setRoomName(false) : setModalVisible(true);
+        }}
+      >
+        <Text style={styles.sendBtnText}>
+          {roomName ? `Leave #${roomName}` : "Join Room"}
+        </Text>
+      </Pressable>
     </View>
   );
 };
@@ -20,8 +30,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     marginBottom: 10,
+    paddingHorizontal: 10,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   text: {
     color: "white",
@@ -30,6 +44,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 18,
     marginBottom: 18,
+  },
+  sendBtn: {
+    height: 40,
+    paddingHorizontal: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sendBtnText: {
+    color: "#3f50b5",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
