@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -5,7 +6,6 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
 
 const ChatList = ({ messages, isLoading, userID }: any) => {
   const flatListRef = React.useRef<FlatList>(null);
@@ -41,7 +41,9 @@ const ChatList = ({ messages, isLoading, userID }: any) => {
                   },
                 ]}
               >
-                <Text style={styles.messageText}>{item.msg}</Text>
+                <Text style={styles.messageText} selectable={true}>
+                  {item.msg}
+                </Text>
                 <Text style={styles.senderText}>
                   {item.sender !== userID ? item?.sender : "You"}
                 </Text>

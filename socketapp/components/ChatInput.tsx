@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, TextInput, View, Text } from "react-native";
 import React from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 const ChatInput = ({ sendMsg }: any) => {
   const [text, setText] = React.useState<string>("");
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   msgInput: {
-    height: 60,
+    height: 50,
     fontSize: 18,
     fontWeight: "600",
     borderColor: "gray",
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   sendBtn: {
-    height: 60,
+    height: 50,
     width: 80,
     backgroundColor: "#3f50b5",
     padding: 10,

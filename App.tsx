@@ -1,18 +1,12 @@
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import {
-  Platform,
-  StyleSheet,
-  View,
-  StatusBar,
-  SafeAreaView,
-} from "react-native";
 import Root from "@socketapp/ChatUI";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 
 export default function App() {
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
       <Root />
-      <ExpoStatusBar style="auto" />
+      <ExpoStatusBar style="dark" />
     </SafeAreaView>
   );
 }
