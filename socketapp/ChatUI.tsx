@@ -1,9 +1,9 @@
-import React from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
-import TitleBar from "@socketapp/components/TitleBar";
 import ChatList from "@socketapp/components/ChatList";
-import ChatInput from "./components/ChatInput";
+import TitleBar from "@socketapp/components/TitleBar";
+import React from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { io } from "socket.io-client";
+import ChatInput from "./components/ChatInput";
 import JoinRoomModal from "./components/JoinRoomModal";
 let socket: any;
 
@@ -22,13 +22,10 @@ const ChatUI: React.FC = () => {
   React.useEffect(() => {
     setIsLoading(true);
     roomName
-      ? (socket = io("http://13.51.225.77", {
-          path: "/socketio/api/socket",
+      ? (socket = io("https://socketwithnext.herokuapp.com/", {
           query: { roomName },
         }))
-      : (socket = io("http://13.51.225.77", {
-          path: "/socketio/api/socket",
-        }));
+      : (socket = io("https://socketwithnext.herokuapp.com/"));
 
     socket.on("updateMessage", (msg: MessageType) => {
       setMessages((messages: MessageType[]) => [...messages, msg]);
