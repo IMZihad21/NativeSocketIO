@@ -22,10 +22,10 @@ const ChatUI: React.FC = () => {
   React.useEffect(() => {
     setIsLoading(true);
     roomName
-      ? (socket = io("https://socketwithnext.herokuapp.com/", {
+      ? (socket = io("https://socketioserver-wmz2yik67q-uc.a.run.app/", {
           query: { roomName },
         }))
-      : (socket = io("https://socketwithnext.herokuapp.com/"));
+      : (socket = io("https://socketioserver-wmz2yik67q-uc.a.run.app/"));
 
     socket.on("updateMessage", (msg: MessageType) => {
       setMessages((messages: MessageType[]) => [...messages, msg]);
